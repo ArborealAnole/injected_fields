@@ -1,0 +1,71 @@
+Tenum is an enum-like "class" that has a list of abstract fields (with no associated value) that each have an associated type accessible
+by being called @TypeOf on. Field access syntax applied to an tenum field returns the tenum value associated with its associated type.
+Tenums are the essence of a composite type. We can create e.g. a packed bare union, tagged union, or struct from them. They may make for
+easier metaprogramming and possibly be more computationally efficient, by reducing use of strings for field access.
+
+Fenum is a "fundamental" enum in that it has no methods or declarations, but an enum consists at least of one.
+
+Class tenum is similar to class enum, so it can also be used like an enum without losing the field-associated types.
+           _enumlike
+       /               \
+    fenum             tenum
+                    /       \
+                 ntenum   atenum
+
+
+Two subclasses of tenum are ntenum and atenum. Tenums have the builtin field .unique, which indicates if they have any two fields with the
+same types.
+
+ - Tenums may be accessed with array syntax, e.g. `MyTenum.[0]`  (declaration order)
+ - Tenums may be accessed with types plus array syntax, e.g. `MyTenum.u32[0]` (declaration order).
+ - Unique tenums may be accessed with types, e.g. `MyUniqueTenum.u32`.
+ - Ntenums may be accessed with symbols because their fields have names, e.g. `MyNtenum.field1`.
+
+Tenum accesses
+ .symbol                                                           symbol field access
+ .Type                                                  unique-type based field access 
+ .[i]                                                             indexed field access
+ .Type[]                                                     type indexed field access
+
+
+An atenum (tuple-like) is a subclass of tenum, but its fields are anonymous. A utuple is a subtype of tuple, which is unique in that does not
+contain more than one field of any type.
+
+Composite types with underlying tenums may use the same field access syntax.
+
+some supported operations (syntax is exploratory, could be builtin/meta/symbolic):
+ @Struct     (tenum) -> (type)
+ @Union      (tenum) -> (type)
+ @GetNtenum  (type) -> (tenum)
+
+ @BuildNtenum   (fenum, atenum) -> (ntenum)                            ntenum creation
+ @StripNtenum   (ntenum) -> (fenum, atenum)                       ntenum decomposition
+
+ @EnumUnion     (fenum, fenum) -> (fenum)              enum merge (basis: field names)
+ @NtenumUnion    (ntenum, ntenum) -> (ntenum)     composite merge (basis: field names)
+ @AtenumUnion    (tenum, tenum) -> (atenum)      composite merge (basis: unique types)
+ ++     (tenum, tenum) -> (atenum)                                tuple multiplication
+ **     (tenum, comptime_int) -> (atenum)                         tuple exponentiation
+
+An `enum`, `union`, or `struct` consists of an _enumlike, a declaration list, and a methods list. Methods should be created after operation on
+data layout.
+
+There is a builtin type Access that represents a set of field or method accesses on composite types.
+
+@fields returns a tenum for a composite type.
+
+Abstract field accesses (in order of precedence)
+ ..     (tenum | Access, tenum_val | Access) -> (Access)               subfield access
+ ||     (tenum_val | Access, Access) -> (Access)                          Access union
+
+ tenum_val                                                                field access
+ tenum_val.*                                                     field indirect access
+ tenum_val[]                                                        field array access
+
+where tenum_val can be any tenum access.
+
+Method accesses
+ .methodName()                                              method return-value access
+
+Abstract field accesses are verified against the corresponding types and its tenums/methods. Declaration access is not available, because
+I am not sure if it is necessary.
