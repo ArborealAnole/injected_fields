@@ -43,7 +43,7 @@ t: [4]TrainNetwork @usingDeclFor(company_info, fu.recursiveIsA(@fields(TrainNetw
 ```
 
 ## Description
-Injected fields (aka `using` fields) seem similar to "dynamic scoping" [[1]](https://wiki.c2.com/?DynamicScoping); "implicit parameters" similar to as in Scala 2 [[2]](https://www.reddit.com/r/ProgrammingLanguages/comments/dvq7ld/implicitly_passed_parameters/), Zig [issue #1286](https://github.com/ziglang/zig/issues/1286); "givens" [[3]](https://docs.scala-lang.org/scala3/reference/contextual/givens.html) in Scala 3; or "dependency injection". They are explicitly configured in an OOP pattern.
+Injected fields (aka `using` fields) seem similar to "dynamic scoping" [[1]](https://wiki.c2.com/?DynamicScoping); "implicit parameters" similar to as in Scala 2 [[2]](https://www.reddit.com/r/ProgrammingLanguages/comments/dvq7ld/implicitly_passed_parameters/), Zig [issue #1286](https://github.com/ziglang/zig/issues/1286); "givens" [[3]](https://docs.scala-lang.org/scala3/reference/contextual/givens.html) in Scala 3; "dependency injection"; or "Explicit Management of Implicit Context (EMIC)" [[4]](https://wiki.c2.com/?ExplicitManagementOfImplicitContext). They are explicitly configured in an OOP pattern.
 
 A struct may have a `using` field, which is "virtual" in the sense that it does not actually exist in memory representation of the struct. Rather, this field is required to be provided by configuration in a program that contains instances of the struct. Any parent structure using it can be configured to provide the field.
 
