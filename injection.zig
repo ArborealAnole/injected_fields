@@ -22,7 +22,7 @@ const TrainNetwork = struct {
         const fs_lgst = @fields(@This());
         pub const all_allocator_users = fs_lgst..(
             .scheduler.* || .stations[] || .trains || fu.returns(fs, Station) || fu.returns(fs, Train) // fu.returns is shallow
-        ) .. .allocator;
+        )...allocator;
     };
     const Publisher = struct {using allocator: *Allocator, using company_info: *const CompanyInfo,};
     const Region = struct {
