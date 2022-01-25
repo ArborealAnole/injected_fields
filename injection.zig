@@ -36,7 +36,7 @@ const TrainNetwork = struct {
     );
     const Resources = struct {
         const FreeEnergy = struct {};
-        a: Allocator,
+        using a: Allocator,
         o: FreeEnergy,
     };
     const fr = @fields(Resources);
