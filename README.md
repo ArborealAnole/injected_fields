@@ -19,7 +19,8 @@ const TrainNetwork = struct {
 };
 
 const TransportationAuthority = struct {
-    pub fn at(self: *TransportationAuthority, i: u3) TrainNetwork { // hidden parameter injections required (1 *Allocator)
+    // hidden parameter injections required (1 *Allocator):
+    pub fn at(self: *TransportationAuthority, i: u3) TrainNetwork {
         return self.t[i];
     }
 };
