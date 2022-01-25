@@ -41,10 +41,10 @@ const TrainNetwork = struct {
     };
     const fr = @fields(Resources);
     const rsrc_provision = .{
-        .{fr...a, allocator_provides},
+        .{fr...a, allocator_provides}, // fr...a is source, allocator_provides is destination
         .{fr...o, fs_tn...z...o},
     };
-    resources: Resources @providingDeep(rsrc_provision),
+    resources: Resources @providingDeep(rsrc_provision), // @providingDeep is not compatible with arraylike or method accesses for the sources
     c: Region,
     z: TimeVarianceAuthority,
     fn c_byname(self: *TrainNetwork, name: []const u8) Region {} // hidden parameter injections required (1 *Allocator, 1 *const CompanyInfo)
