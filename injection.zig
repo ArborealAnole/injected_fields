@@ -67,7 +67,7 @@ const A = struct {
     b: TransportationAuthority,
 };
 
-const TimeVarianceAuthority = struct {using allocator: Allocator, using o: FreeEnergy, const info = "redacted";};
+const TimeVarianceAuthority = struct {using allocator: *Allocator, using o: FreeEnergy, const info = "redacted";};
 
 fn runTrains(tn: *TrainNetwork) void { // hidden parameter injections required (1 *Allocator, 1 *const CompanyInfo)
    tn.operate();
