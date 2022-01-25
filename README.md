@@ -45,7 +45,7 @@ t: [4]TrainNetwork @usingDeclFor(company_info, fu.recursiveIsA(@fields(TrainNetw
 
 const A = struct {
     a: Allocator
-        @providing(@fields(A)..b..()at.allocator),
+        @providing(@fields(A)...b...at()...allocator),
     b: TransportationAuthority,
 };
 ```
