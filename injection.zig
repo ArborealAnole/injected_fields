@@ -63,7 +63,7 @@ const TransportationAuthority = struct {
 
 const A = struct {
     a: Allocator
-        @providing(@fields(A)..b..()at.allocator),
+        @providing(@fields(A)...b...at()...allocator),
     b: TransportationAuthority,
 };
 
