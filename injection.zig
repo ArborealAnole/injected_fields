@@ -36,12 +36,12 @@ const TrainNetwork = struct {
     );
     const Resources = struct {
         const FreeEnergy = struct {};
-        using a: Allocator,
+        using a: *Allocator,
         o: FreeEnergy,
     };
     const fr = @fields(Resources);
     const rsrc_provision = .{
-        .{fr...a, allocator_provides}, // fr...a is source, allocator_provides is destination
+        .{fr...a.*, allocator_provides}, // fr...a.* is source, allocator_provides is destination
         .{fr...o, fs_tn...z...o},
     };
     resources: Resources @providingDeep(rsrc_provision), // @providingDeep is not compatible with arraylike or method accesses for the sources
