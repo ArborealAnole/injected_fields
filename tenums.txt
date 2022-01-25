@@ -49,23 +49,3 @@ some supported operations (syntax is exploratory, could be builtin/meta/symbolic
 
 An `enum`, `union`, or `struct` consists of an _enumlike, a declaration list, and a methods list. Methods should be created after operation on
 data layout.
-
-There is a builtin type Access that represents a set of field or method accesses on composite types.
-
-@fields returns a tenum for a composite type.
-
-Abstract field accesses (in order of precedence)
- ..     (tenum | Access, tenum_val | Access) -> (Access)               subfield access
- ||     (tenum_val | Access, Access) -> (Access)                          Access union
-
- tenum_val                                                                field access
- tenum_val.*                                                     field indirect access
- tenum_val[]                                                        field array access
-
-where tenum_val can be any tenum access.
-
-Method accesses
- .methodName()                                              method return-value access
-
-Abstract field accesses are verified against the corresponding types and its tenums/methods. Declaration access is not available, because
-I am not sure if it is necessary.
