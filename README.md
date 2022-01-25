@@ -13,7 +13,7 @@ Injected fields is a possible feature for Zig or any programming language; usage
 ```zig
 const TrainNetwork = struct {
     const Resources = struct {
-        using a: Allocator,
+        using a: *Allocator,
     };
     resources: Resources,
 };
