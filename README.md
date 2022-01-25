@@ -40,6 +40,14 @@ resources: Resources @providingDeep(rsrc_provision),
 
 t: [4]TrainNetwork @usingDeclFor(company_info, fu.recursiveIsA(@fields(TrainNetwork), Publisher)),
 // fu.recursiveIsA is deep
+
+// ...
+
+const A = struct {
+    a: Allocator
+        @providing(@fields(A)..b..()at.allocator),
+    b: TransportationAuthority,
+};
 ```
 
 ## Description
