@@ -31,8 +31,8 @@ const TrainNetwork = struct {
     };
     const fs_tn = @fields(@This());
     const allocator_provides = fs_tn..(
-        (.c || .c_byname()) .. (.d .. Logistics.all_allocator_users || .e.allocator)
-        || .z .. .allocator
+        (.c || .c_byname()) .. (.d .. Logistics.all_allocator_users || .e...allocator)
+        || .z...allocator
     );
     const Resources = struct {
         const FreeEnergy = struct {};
