@@ -38,7 +38,7 @@ const TrainNetwork = struct {
         const FreeEnergy = struct {};
         a: Allocator,
         o: FreeEnergy,
-    }
+    };
     const fr = @fields(Resources);
     const rsrc_provision = .{
         .{fr...a, allocator_provides},
@@ -63,7 +63,7 @@ const TransportationAuthority = struct {
 
 const A = struct {
     a: Allocator
-        @providing(@fields(A)...b...at()...allocator),
+        @providing(@fields(A)...b...at()...resources...a),
     b: TransportationAuthority,
 };
 
