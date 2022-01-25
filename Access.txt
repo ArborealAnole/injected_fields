@@ -4,7 +4,9 @@ There is a builtin type Access that represents a set of field or method accesses
 
 Abstract field accesses (in order of precedence)
  ..     (tenum | Access, tenum_val | Access) -> (Access)               subfield access
- ||     (tenum_val | Access, Access) -> (Access)                          Access union
+ ||     (tenum_val | Access, tenum_val | Access) -> (Access)              Access union
+ &&     (tenum_val | Access, tenum_val | Access) -> (Access)       Access intersection
+ ~      (tenum_val | Access) -> (Access)                               Access negation
 
  tenum_val                                                                field access
  tenum_val.*                                                     field indirect access
@@ -12,8 +14,13 @@ Abstract field accesses (in order of precedence)
 
 where tenum_val can be any tenum access.
 
+Access inversion can be combined with access intersection to create access difference. In that case a positive Access is produced. A
+negative access as produced by negation cannot be used to represent a field access, of course.
+
 Method accesses
  .methodName()                                              method return-value access
 
 Abstract field accesses are verified against the corresponding types and its tenums/methods. Declaration access is not available, because
 I am not sure if it is necessary.
+
+Access could perhaps be implemented in userland with function calls, instead of as a builtin with operators.
