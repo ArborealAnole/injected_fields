@@ -22,10 +22,10 @@ same types.
  - Ntenums may be accessed with symbols because their fields have names, e.g. `MyNtenum.field1`.
 
 Tenum accesses
- .symbol                                                           symbol field access
- .Type                                                  unique-type based field access 
- .[i]                                                             indexed field access
- .Type[]                                                     type indexed field access
+ .symbol                                                               symbol field access
+ .Type                                                      unique-type based field access 
+ .[i]                                                                 indexed field access
+ .Type[i]                                                        type-indexed field access
 
 
 An atenum (tuple-like) is a subclass of tenum, but its fields are anonymous. A utuple is a subtype of tuple, which is unique in that does not
@@ -33,19 +33,19 @@ contain more than one field of any type.
 
 Composite types with underlying tenums may use the same field access syntax.
 
-some supported operations (syntax is exploratory, could be builtin/meta/symbolic):
- @Struct     (tenum) -> (type)
- @Union      (tenum) -> (type)
- @GetNtenum  (type) -> (tenum)
+some supported operations (exploratory, could be builtin/meta/symbolic):
+ @Struct                      (tenum) -> (type)
+ @Union                       (tenum) -> (type)
+ @GetNtenum                   (type) -> (tenum)
 
- @BuildNtenum   (fenum, atenum) -> (ntenum)                            ntenum creation
- @StripNtenum   (ntenum) -> (fenum, atenum)                       ntenum decomposition
+ @BuildNtenum       (fenum, atenum) -> (ntenum)                            ntenum creation
+ @StripNtenum       (ntenum) -> (fenum, atenum)                       ntenum decomposition
 
- @EnumUnion     (fenum, fenum) -> (fenum)              enum merge (basis: field names)
- @NtenumUnion    (ntenum, ntenum) -> (ntenum)     composite merge (basis: field names)
- @AtenumUnion    (tenum, tenum) -> (atenum)      composite merge (basis: unique types)
- ++     (tenum, tenum) -> (atenum)                                tuple multiplication
- **     (tenum, comptime_int) -> (atenum)                         tuple exponentiation
+ @EnumUnion             (fenum, fenum) -> (fenum)          enum merge (basis: field names)
+ @NtenumUnion        (ntenum, ntenum) -> (ntenum)     composite merge (basis: field names)
+ @AtenumUnion          (tenum, tenum) -> (atenum)    composite merge (basis: unique types)
+ ++                    (tenum, tenum) -> (atenum)                     tuple multiplication
+ **             (tenum, comptime_int) -> (atenum)                     tuple exponentiation
 
 An `enum`, `union`, or `struct` consists of an _enumlike, a declaration list, and a methods list. Methods should be created after operation on
 data layout.
