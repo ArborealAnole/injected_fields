@@ -11,41 +11,22 @@ Injected fields is a possible feature for Zig or any programming language; usage
 ## Synopsis
 
 ```zig
-const fs_lgst = @fields(@This());
-pub const all_allocator_users = fs_lgst..(
-    .scheduler.* || .stations[] || .trains || fu.returns(fs, Station) || fu.returns(fs, Train)
-)...allocator;
-// fu.returns is shallow
-
-// ...
-
-const fs_tn = @fields(@This());
-const allocator_provides = fs_tn..(
-    (.c || .c_byname()) .. (.d .. Logistics.all_allocator_users || .e...allocator)
-    || .z...allocator
-);
-const Resources = struct {
-    const FreeEnergy = struct {};
-    a: Allocator,
-    o: FreeEnergy,
-}
-const fr = @fields(Resources);
-const rsrc_provision = .{
-        .{fr...a, allocator_provides},
-        .{fr...o, fs_tn...z...o},
+const TrainNetwork = struct {
+    const Resources = struct {
+        using a: Allocator,
+    };
+    resources: Resources,
 };
-resources: Resources @providingDeep(rsrc_provision),
 
-// ...
-
-t: [4]TrainNetwork @usingDeclFor(company_info, fu.recursiveIsA(@fields(TrainNetwork), Publisher)),
-// fu.recursiveIsA is deep
-
-// ...
+const TransportationAuthority = struct {
+    pub fn at(self: *TransportationAuthority, i: u3) TrainNetwork { // hidden parameter injections required (1 *Allocator)
+        return self.t[i];
+    }
+};
 
 const A = struct {
     a: Allocator
-        @providing(@fields(A)...b...at()...allocator),
+        @providing(@fields(A)...b...at()...resources...a),
     b: TransportationAuthority,
 };
 ```
@@ -59,7 +40,7 @@ There must be exactly 1 candidate injection argument for every `using` field or 
 
 The compiler automatically injects the provided value as arguments/parameters through the necessary function calls. If you somehow get a pointer to an instance of a struct with the `using` field, then the compiler can automatically obtain the correct value for that field.
 
-The `using` fields are always pointers, because they do not have physical storage but refer to an object stored elsewhere. Technically, they could be available on the stack because they are implemented as parameters, but this would be misleading because it's valid for each So there is an implicit address-of operation for the builtin functions.
+The `using` fields are always pointers, because they do not have physical storage but refer to an object stored elsewhere. Technically, they could be available on the stack because they are implemented as parameters, but this would be misleading because mutation would not be persistent. So there is an implicit address-of operation for the builtin functions.
 
 If you want to provide a more complex way of obtaining the correct resource, e.g.
 - you can call a function on (or method of) the injected field at the use-site.
